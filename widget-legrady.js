@@ -160,11 +160,11 @@
 
         :root {
             --c-bg: #ffffff;
-            --c-surface: #f7f6f4;
-            --c-ink: #111111;
-            --c-muted: #999;
-            --c-line: #e8e8e8;
-            --c-accent: #111111;
+            --c-surface: #f7f1e7;
+            --c-ink: #5b4530;
+            --c-muted: #a08b73;
+            --c-line: #e8ddcd;
+            --c-accent: #b28b57;
             --c-danger: #cc3333;
             --font-display: inherit;
             --font-body: inherit;
@@ -1025,7 +1025,7 @@
         // Loja Integrada primeiro: a galeria e um carrossel Splide dentro de .produtos-img.
         // (os seletores Nuvemshop/Shopify abaixo sobraram do port e nao existem aqui —
         // sem os de LI o botao caia no fallback fixo no canto da tela)
-        const imgContainers = ['.produtos-img', '.splide__track', '.splide',
+        const imgContainers = ['.imagem-produto', '.imagens-produto', '.produto-imagens', '.foto-produto', '.zoom-imagem', '.miniaturas', '.produtos-img', '.splide__track', '.splide',
             '.js-product-slide', '.product-image-column', '.js-swiper-product', '[data-store^="product-image-"]', '.product__media-wrapper', '.product-gallery__media', '.product__media', '.product-image-main', '.product-media-container', '[data-media-id]', '.product__media-item', '.product-gallery', '.product-single__media', '.media-gallery'];
 
         function tryPlaceTriggerBtn() {
