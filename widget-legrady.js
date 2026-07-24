@@ -1025,7 +1025,7 @@
         // Loja Integrada primeiro: a galeria e um carrossel Splide dentro de .produtos-img.
         // (os seletores Nuvemshop/Shopify abaixo sobraram do port e nao existem aqui —
         // sem os de LI o botao caia no fallback fixo no canto da tela)
-        const imgContainers = ['.imagem-produto', '.imagens-produto', '.produto-imagens', '.foto-produto', '.zoom-imagem', '.miniaturas', '.produtos-img', '.splide__track', '.splide',
+        const imgContainers = ['.conteiner-imagem', '.produtos-img', '.splide__track', '.splide',
             '.js-product-slide', '.product-image-column', '.js-swiper-product', '[data-store^="product-image-"]', '.product__media-wrapper', '.product-gallery__media', '.product__media', '.product-image-main', '.product-media-container', '[data-media-id]', '.product__media-item', '.product-gallery', '.product-single__media', '.media-gallery'];
 
         function tryPlaceTriggerBtn() {
@@ -1165,6 +1165,24 @@
         }
 
         function extractImages() {
+            // ── Loja Integrada (tema Legrady): a imagem PRINCIPAL exibida é #imagemProduto e a
+            // galeria (alta-res via data-largeimg) é ul.miniaturas.slides. Ambos são trocados
+            // pelo tema quando o cliente escolhe a VARIAÇÃO (cor) → refletem a seleção.
+            // ⚠️ NÃO usar .imagem-produto: nesse tema são cards de LISTAGEM/minicart (outros produtos).
+            const liUrls = [];
+            const pushLi = (s) => {
+                if (!s) return; s = String(s).split(' ')[0].trim();
+                if (s.startsWith('//')) s = 'https:' + s;
+                if (s.includes('data:image') || /--PRODUTO_IMAGEM--|logo_provador/.test(s)) return;
+                if (liUrls.indexOf(s) === -1) liUrls.push(s);
+            };
+            const liMain = document.querySelector('#imagemProduto');
+            if (liMain) pushLi(liMain.getAttribute('data-largeimg') || liMain.getAttribute('data-zoom-image') || liMain.currentSrc || liMain.src);
+            Array.from(document.querySelectorAll('ul.miniaturas.slides li img, .miniaturas.slides li img')).forEach((img) => {
+                pushLi(img.getAttribute('data-largeimg') || img.getAttribute('data-mediumimg') || img.currentSrc || img.src);
+            });
+            if (liUrls.length) return liUrls.slice(0, 4);
+
             const containersSelectors = '.conteiner-principal, .imagem-produto, .imagens-produto, .produto-imagens, .foto-produto, .zoom-imagem, .thumbs, [class*="imagem-produto"], .js-product-slide, .product-gallery, .swiper-slide:not(.swiper-slide-duplicate)';
             const possibleContainers = Array.from(document.querySelectorAll(containersSelectors));
             let imgEls = [];
