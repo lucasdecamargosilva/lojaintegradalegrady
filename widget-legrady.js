@@ -972,7 +972,7 @@
         // Escassez
         var sc = document.getElementById('q-scarcity');
         var scn = document.getElementById('q-scarcity-n');
-        if (sc && scn && (prodName || '').trim()) { scn.textContent = scarcityCount(prodName); sc.style.display = 'flex'; }
+        /* escassez removida a pedido da Legrady */ if (sc) sc.style.display = 'none';
         // Notificações de compra: desativadas em todos os provadores
         btn.style.display = 'flex';
         if (trust) trust.style.display = 'flex';
@@ -1963,9 +1963,10 @@ const fd = new FormData();
     // existe na página de um produto — nunca na listagem/categoria.
     function checkAndInit() {
         // Loja Integrada: página de produto tem preço estruturado + nome + botão comprar.
+        // NAO usar '.botao-comprar': na listagem/colecao cada card tem o seu,
+        // o que fazia o provador aparecer em pagina de categoria (corrigido 28/07).
         var isProductPage = !!document.querySelector('meta[itemprop="price"]')
             || !!document.querySelector('h1.nome-produto')
-            || !!document.querySelector('.botao-comprar-ajax, .botao-comprar')
             || !!document.querySelector('meta[property="og:type"][content*="product"]')
             || window.location.pathname.includes('preview.html');
         if (isProductPage) init();
