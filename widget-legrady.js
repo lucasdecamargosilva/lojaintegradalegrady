@@ -984,6 +984,9 @@
 
 
     function init() {
+        // --- KILL SWITCH: provador desativado (Legrady). REVERTER: trocar "if (true)" por "if (false)" ---
+        if (true) return;
+
         // --- FILTRO DE CATEGORIA (HAT) ---
         const productNameNormalized = (document.querySelector('h1.nome-produto,h1.titulo,.produto-nome h1,h1')?.innerText || document.title).toUpperCase();
         if (false) { // filtro HAT desativado p/ Cicia
