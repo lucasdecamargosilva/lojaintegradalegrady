@@ -2378,7 +2378,11 @@
 
             const containersSelectors = '.conteiner-principal, .imagem-produto, .imagens-produto, .produto-imagens, .foto-produto, .zoom-imagem, .thumbs, [class*="imagem-produto"], .js-product-slide, .product-gallery, .swiper-slide:not(.swiper-slide-duplicate)';
 
-            const possibleContainers = Array.from(document.querySelectorAll(containersSelectors));
+            // Só a galeria do produto (slide a slide). A busca ampla (coluna inteira, qualquer swiper) é reserva
+            // para tema sem galeria reconhecida — ela pegava banner/produto relacionado (Santi 20/10).
+            const gallerySelectors = '.js-product-slide, .product__media-item, .product-single__media, [data-media-id]';
+            let possibleContainers = Array.from(document.querySelectorAll(gallerySelectors)).filter(c => c.querySelector('img'));
+            if (!possibleContainers.length) possibleContainers = Array.from(document.querySelectorAll(containersSelectors));
 
             let imgEls = [];
 
